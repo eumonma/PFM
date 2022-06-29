@@ -16,5 +16,5 @@ const blogSchema = new Schema({
     }
 }, { timestamps: true});
 
-const Blog = mongoose.model('Blog', blogSchema);
+const Blog = mongoose.model('Blog', blogSchema, 'prueba'); // el tercer argumento es el nombre de la colección que queremos en MongoDB
 module.exports = Blog;
