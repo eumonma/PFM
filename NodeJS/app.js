@@ -5,11 +5,16 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
+const dotenv = require("dotenv");
+
 const blogRoutes = require("./routes/blogRoutes");
-const blogRoutes = require("./routes/playersRoutes");
+const playersRoutes = require("./routes/playersRoutes");
 
 // Express app
 const app = express();
+
+dotenv.config({ path: "config.env" });
+const PORTNODE = process.env.PORTNODE;
 
 // Connect a MongoDB
 const dbURI = "mongodb://localhost:27017/LOL";
@@ -19,7 +24,7 @@ mongoose
   .then((result) => {
     console.log("Conectado a LOL");
     //listen for request
-    app.listen(3000);
+    app.listen(PORTNODE);
   })
   .catch((err) => {
     console.log(err);
