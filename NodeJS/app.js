@@ -6,6 +6,8 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 
 const dotenv = require("dotenv");
+const bodyparser = require("body-parser");
+const path=require("path");
 
 const blogRoutes = require("./routes/blogRoutes");
 const playersRoutes = require("./routes/playersRoutes");
@@ -30,8 +32,17 @@ mongoose
     console.log(err);
   });
 
+// parser request to body-parser
+app.use(bodyparser.urlencoded({extended:true}));
+
 // Register view engine. Se indica que vamos a utilizar EJS en nuestras vistas. Por defecto utiliza la carpeta "views"
 app.set("view engine", "ejs");
+//app.set("views", path.resolve(__dirname, "views/LoL"));
+
+// Load Assets
+app.use('/css', express.static(path.resolve(__dirname, "assets/css")));
+app.use('/img', express.static(path.resolve(__dirname, "assets/img")));
+app.use('/js', express.static(path.resolve(__dirname, "assets/js")));
 
 // Midelware & static files
 app.use(express.static("public")); // public es el directorio donde se guardan los ficheres que pueden ser vistos en los clientes
@@ -43,6 +54,10 @@ app.use((req, res, next) => {
 });
 
 //enrutamiento
+app.get('/', (req, res) => {
+    res.render("indexplayer");
+});
+
 app.get("/", (req, res) => {
   res.redirect("/blogs");
 });
@@ -53,6 +68,7 @@ app.get("/about", (req, res) => {
 
 //blogs Routes
 app.use("/blogs", blogRoutes);
+
 
 // 404 page. Se ha de poner siempre al final
 app.use((req, res) => {
