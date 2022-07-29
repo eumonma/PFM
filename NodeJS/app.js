@@ -1,5 +1,6 @@
 // para llamar desde el navegador
 // http://127.0.0.1:3000/blogs
+// http://127.0.0.1:3000/indexplayer
 
 const express = require("express");
 const morgan = require("morgan");
